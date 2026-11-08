@@ -10,8 +10,8 @@ from pathlib import Path
 from kaggle_secrets import UserSecretsClient
 
 # probe tries two scenes and smoke runs every step on ten scenes while full4b and full8b run the whole study for one model
-MODE = "smoke"
-COMMIT = "235b679f95701a087bc58e766fe7042ae925a33b"
+MODE = "full4b"
+COMMIT = "d7ce899e52b88033d8ab18eaa2ee74c9a7123630"
 REPO = "https://github.com/Mohidali2005/seeing-through-the-clutter.git"
 INSTALL = ["transformers==5.22.1"]
 CODE = Path("/tmp/code")

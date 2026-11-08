@@ -25,8 +25,9 @@ logprob = table.pivot_table(index=key,columns="condition",values="logprob",aggfu
 answers = table.pivot_table(index=key,columns="condition",values="answer",aggfunc="first").reset_index()
 scenes = np.sort(correct["scene_id"].unique())
 draws = scene_resamples(scenes)
-answer_rows = config.ANSWER_ROWS[config.DATASETS[args.dataset]["swap_rows"]]
-score_rows = config.SCORE_ROWS[config.DATASETS[args.dataset]["swap_rows"]]
+kind = config.MODELS[args.model].get("swap_rows",config.DATASETS[args.dataset]["swap_rows"])
+answer_rows = config.ANSWER_ROWS[kind]
+score_rows = config.SCORE_ROWS[kind]
 versions = [v for v in correct["version"].unique()]
 
 

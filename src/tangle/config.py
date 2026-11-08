@@ -12,6 +12,8 @@ MODELS = {
         "revision":"0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
         "device_map":"auto",
         "copies":1,
+        # the replication runs the main swap rows only because the 8b model is twice as slow on one copy
+        "swap_rows":"short",
     },
 }
 

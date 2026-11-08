@@ -20,7 +20,7 @@ def plans_for(names):
 if __name__=="__main__":
     args = work.worker_args("answer every cluttered picture with mixed clean and cluttered notes")
     model,processor = qwen.load(args.model)
-    kind = config.DATASETS[args.dataset]["swap_rows"]
+    kind = config.MODELS[args.model].get("swap_rows",config.DATASETS[args.dataset]["swap_rows"])
     prefill = config.DATASETS[args.dataset]["prefill"]
     answer_names = ["clean","cluttered"]+config.ANSWER_ROWS[kind]
     score_names = ["clean","cluttered"]+config.SCORE_ROWS[kind]

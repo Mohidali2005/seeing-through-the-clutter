@@ -27,6 +27,8 @@ class Recorder:
         self.model = model
         self.positions = positions
         self.rows = rows
+        # a model split over two gpus leaves later layers on the second one so every note is moved to the first
+        self.device = model.device
         self.vision = []
         self.deepstack = []
         self.llm = []
@@ -34,17 +36,17 @@ class Recorder:
 
     def keep_vision(self,module,args,output):
         """Keep the output of the patch embedding or of one vision block"""
-        self.vision.append(output.reshape(self.rows,config.PATCHES,-1).clone())
+        self.vision.append(output.reshape(self.rows,config.PATCHES,-1).to(self.device,copy=True))
 
     def keep_handover(self,module,args,output):
         """Keep the three deepstack feature sets handed to the language part"""
-        self.deepstack = [d.reshape(self.rows,config.TOKENS,-1).clone() for d in output.deepstack_features]
+        self.deepstack = [d.reshape(self.rows,config.TOKENS,-1).to(self.device,copy=True) for d in output.deepstack_features]
 
     def keep_llm(self,module,args,kwargs=None):
         """Keep the residual stream at the image tokens as it enters a decoder layer or the final norm"""
         hidden = hidden_of(args,kwargs or {})
         if hidden.shape[1]>1:
-            self.llm.append(hidden[:,self.positions.to(hidden.device)].clone())
+            self.llm.append(hidden[:,self.positions.to(hidden.device)].to(self.device,copy=True))
 
     def __enter__(self):
         visual,language = parts_of(self.model)

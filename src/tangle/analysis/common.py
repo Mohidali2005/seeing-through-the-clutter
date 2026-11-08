@@ -33,7 +33,7 @@ def load_swap(folder):
     table = pd.concat([pd.DataFrame(records.read_csv(f)) for f in files],ignore_index=True)
     for name in ["exact_match","parsed","greedy_gold"]:
         table[name] = table[name].map({"True":True,"False":False,"":None})
-    for name in ["logprob","check_diff","abs_error","total_bias","new_tokens"]:
+    for name in ["logprob","check_diff","abs_error","total_bias","new_tokens","n_object","n_background","n_clutter"]:
         table[name] = pd.to_numeric(table[name],errors="coerce")
     table["scene_id"] = table["scene_id"].astype(int)
     return table

@@ -1,0 +1,11 @@
+# The generated datasets live on Hugging Face (rebuild them with scripts/generate_*.py)
+data/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+# kaggle downloads and local caches
+runs/
+cache/
+*.egg-info/
+.pytest_cache/
+.venv/
